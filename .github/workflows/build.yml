@@ -1,0 +1,29 @@
+name: Сборка CS2 Round Coach
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+      - name: Получение исходников
+        uses: actions/checkout@v4
+
+      - name: Установка Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Установка PyInstaller
+        run: pip install pyinstaller
+
+      - name: Сборка EXE
+        run: pyinstaller --onefile --windowed --name CS2_Round_Coach CS2_Round_Coach_v3.py
+
+      - name: Сохранение программы
+        uses: actions/upload-artifact@v4
+        with:
+          name: CS2-Round-Coach-Windows
+          path: dist/CS2_Round_Coach.exe
